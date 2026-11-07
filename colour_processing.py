@@ -26,6 +26,7 @@ def generate_mask(hsvframe,upper,lower):
     mask = cv.morphologyEx(mask, cv.MORPH_CLOSE, kernel)  # fills small holes
     
     return mask
+#HELLO WORLD
 
 def generate_contours(frame, mask):
         res = cv.bitwise_and(frame, frame, mask=mask)
