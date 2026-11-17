@@ -12,7 +12,7 @@ def yolo_result(frame):
     
     return results[0]
 
-def find_right_wrist(result, points, confidence_threshold):
+def find_points(result, points, confidence_threshold):
     points_result =[]
     kp = result.keypoints
     sizes = {}

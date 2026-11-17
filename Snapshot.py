@@ -27,9 +27,12 @@ def process_gesture_vid(video_path: str):
     # Is that the plan still?
     #use shape_processor function make_circle
     
+    #Seysha: No you do not. This will replace the circle initially
 
 
     #Video is the video we're putting in, should it ask for it first or will we have one?
+    #Seysha: You should ask the user for that path
+    
     cap = cv.VideoCapture(video)
 
 
@@ -67,6 +70,7 @@ def process_gesture_vid(video_path: str):
     plt.close()   
     return tracked_points
     #I dont know how to get it to the json file
+    #Seysha: Alright, I can do it or we can do it together in the future
          
 
 if __name__ == "__main__":

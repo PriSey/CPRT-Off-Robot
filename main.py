@@ -52,7 +52,7 @@ def main():
             print("Waiting for frame")
 
         res = yd.yolo_result(frame)
-        points = yd.find_right_wrist(res,[9],0.400)
+        points = yd.find_points(res,[9],0.400)
         if len(points) > 0:
             point, conf = points[0]
             cx, cy = point

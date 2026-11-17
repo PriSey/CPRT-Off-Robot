@@ -1,4 +1,5 @@
 import json
+
 def load_hsv():
     with open('hsv.json','r') as f:
         params = json.load(f)
