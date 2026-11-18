@@ -46,6 +46,8 @@ def process_gesture_vid(video_path: str):
 
         
         cv.imshow("base",frame)
+        if cv.waitKey(1) & 0xFF == ord("q"):  # press q to quit early
+          break
         res = yd.yolo_result(frame)
         
         points = yd.find_points(res, [10], 0.400)        
@@ -53,10 +55,12 @@ def process_gesture_vid(video_path: str):
             point, conf = points[0]
             
             px, py = point
+            px = float(px)
+            py = float(py)
             x_axis.append(px)
             y_axis.append(py)
             
-            tracked_points.append((x_axis, y_axis))
+            tracked_points.append((px, py))
             
         plt.pause(0.000000000000001)
 
