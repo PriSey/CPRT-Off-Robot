@@ -13,7 +13,7 @@ def segment_line(line, resolution=RESOLUTION):
   re_segmentation_points = np.linspace(0, seg_dists_from_origin[-1], resolution)
   return np.column_stack([np.interp(re_segmentation_points, seg_dists_from_origin, pts_a[:, i]) for i in range(pts_a.shape[1])])
 
-def smooth_shape(segments, frac=0.03, closed=False,m=RESOLUTION):
+def smooth_shape(segments, frac=0.01, closed=False,m=RESOLUTION):
   if segments is None:
       return
   mode = 'wrap' if closed else 'nearest'
@@ -23,6 +23,7 @@ def normalize_dist_matrix(line):
   if line is None:
     return
   dist_matrix = cdist(line, line)
+  dist_matrix = dist_matrix - dist_matrix.mean()
   return dist_matrix / np.linalg.norm(dist_matrix)
 
 def check_similarity(distA, distB):
