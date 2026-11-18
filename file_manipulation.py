@@ -16,5 +16,15 @@ def write_hsv(upper,lower):
         d = json.dumps(parent_dict)
         f.write(d)
     
-    
+def load_gestures():
+  with open('gestures.json') as f:
+    gestures = json.load(f)
+  return gestures
+
+def add_gesture(name, gesture):
+  json_content = load_gestures()
+  json_content[name] = gesture
+  d = json.dumps(json_content)
+  with open('gestures.json') as f:
+      f.write(d)
     

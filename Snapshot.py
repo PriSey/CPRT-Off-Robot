@@ -30,10 +30,8 @@ def process_gesture_vid(video_path: str):
     #Seysha: No you do not. This will replace the circle initially
 
 
-    #Video is the video we're putting in, should it ask for it first or will we have one?
-    #Seysha: You should ask the user for that path
     
-    cap = cv.VideoCapture(video)
+    cap = cv.VideoCapture(video_path)
 
 
     if not cap.isOpened():
@@ -62,17 +60,19 @@ def process_gesture_vid(video_path: str):
             x_axis.append(px)
             y_axis.append(py)
             
-            tracked_points.append([x_axis, y_axis])
+            tracked_points.append((x_axis, y_axis))
             
     cap.release()
     cv.destroyAllWindows()
-    plt.ioff()
-    plt.close()   
     return tracked_points
+  
     #I dont know how to get it to the json file
-    #Seysha: Alright, I can do it or we can do it together in the future
+    #Seysha: Yep. Done
          
 
 if __name__ == "__main__":
-    video_file ="path_to_gesture_video.mp4"
-    coll_data = process_gesture_vid(video_file)
+    video_file = input()
+    line = process_gesture_vid(video_file)
+    fm.add_gesture(line)
+    plt.ioff()
+    plt.close()   
