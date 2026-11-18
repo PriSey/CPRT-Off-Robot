@@ -3,7 +3,11 @@ import matplotlib.pyplot as plt
 
 def main():
   gestures = fm.load_gestures()
-  for gesture in gesture:
+  for gesture in gestures.keys():
+    x_axis, y_axis = zip(*gestures[gesture])
+    x_axis = list(x_axis)
+    y_axis = list(y_axis)
+    graph = plt.plot(x_axis, y_axis)
      
 
 
