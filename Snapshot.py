@@ -5,7 +5,7 @@
 #It will repeatedly give points, add points to a list, then graph points (visual aid)
 #That list should be written as a json as a gesture (all 5 gestures go into 1 json file)
 import cv2 as cv
-import file_manipulation.py as fm
+import file_manipulation as fm
 import matplotlib.pyplot as plt
 import shape_processor as sp
 import yolo_detection as yd
@@ -28,8 +28,6 @@ def process_gesture_vid(video_path: str):
     #use shape_processor function make_circle
     
     #Seysha: No you do not. This will replace the circle initially
-
-
     
     cap = cv.VideoCapture(video_path)
 
@@ -37,22 +35,20 @@ def process_gesture_vid(video_path: str):
     if not cap.isOpened():
         exit()
         
-    total_frames = int(cap.get(cv.CAP_PROP_FRAME_COUNT))
         
     tracked_points = []
-    frame_count = 0
 
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
-            break
-        frame_count += 1
-        
+            break        
         #YOLO will track gesture of RIGHT hand
+
         
+        cv.imshow("base",frame)
         res = yd.yolo_result(frame)
-        points = yd.find_right_wrist(res, [10], 0.400)
         
+        points = yd.find_points(res, [10], 0.400)        
         if len(points) > 0:
             point, conf = points[0]
             
@@ -61,6 +57,9 @@ def process_gesture_vid(video_path: str):
             y_axis.append(py)
             
             tracked_points.append((x_axis, y_axis))
+            
+        plt.pause(0.000000000000001)
+
             
     cap.release()
     cv.destroyAllWindows()
@@ -71,8 +70,9 @@ def process_gesture_vid(video_path: str):
          
 
 if __name__ == "__main__":
-    video_file = input()
+    video_file = input("Please entire file name: ")
+    name = input("Please enter gesture name: ")
     line = process_gesture_vid(video_file)
-    fm.add_gesture(line)
+    fm.add_gesture(name, line)
     plt.ioff()
     plt.close()   
