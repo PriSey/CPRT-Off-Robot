@@ -31,7 +31,7 @@ def check_similarity(distA, distB):
   return min(np.linalg.norm(distA - distB), np.linalg.norm(distA - distB[::-1, ::-1]))
 
 def compare(lineA, lineB):
-  check_similarity(normalize_dist_matrix(smooth_shape(segment_line(lineA))),normalize_dist_matrix(smooth_shape(segment_line(lineB))))
+  return check_similarity(normalize_dist_matrix(smooth_shape(segment_line(lineA))),normalize_dist_matrix(smooth_shape(segment_line(lineB))))
 
 #FOR TESTING
 def make_circle(n=100, radius=100, center=(100, 100)):

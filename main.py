@@ -23,7 +23,7 @@ def main():
 
     plt.ion()
 
-    cap = cv.VideoCapture(1)
+    cap = cv.VideoCapture(0)
 
     if not cap.isOpened():
         print("Camera unaccessable")
@@ -39,10 +39,6 @@ def main():
 
     plt.xlim(0,1000)
         
-
-    smooth_circle = sp.smooth_shape(sp.segment_line(cx,cy))
-    plt.plot(smooth_circle[:,0],smooth_circle[:,1])
-
 
 
     while True:
@@ -70,8 +66,10 @@ def main():
         
         for gesture in gestures.keys():
           difference = sp.compare(line, gestures[gesture])
-          if difference < SIMILARITY_THRESHOLD:
-            print(f"You made the {gesture} gesture.")
+          if difference != None:
+            print(f"checking gesture {gesture} finding difference {difference}")
+            if difference < SIMILARITY_THRESHOLD:
+              print(f"You made the {gesture} gesture.")
         
         
         plt.pause(0.000000000000001)

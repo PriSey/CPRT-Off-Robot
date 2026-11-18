@@ -25,6 +25,6 @@ def add_gesture(name, gesture):
   json_content = load_gestures()
   json_content[name] = gesture
   d = json.dumps(json_content)
-  with open('gestures.json') as f:
+  with open('gestures.json','w') as f:
       f.write(d)
     
