@@ -74,9 +74,12 @@ def process_gesture_vid(video_path: str):
          
 
 if __name__ == "__main__":
-    video_file = input("Please entire file name: ")
+    video_file = input("Please enter file name: ")
     name = input("Please enter gesture name: ")
     line = process_gesture_vid(video_file)
     fm.add_gesture(name, line)
     plt.ioff()
     plt.close()   
+    
+    
+    
