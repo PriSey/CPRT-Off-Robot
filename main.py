@@ -23,7 +23,7 @@ def main():
 
     plt.ion()
 
-    cap = cv.VideoCapture(1)
+    cap = cv.VideoCapture(0)
 
     if not cap.isOpened():
         print("Camera unaccessable")
@@ -40,10 +40,6 @@ def main():
     plt.xlim(0,1000)
         
 
-    smooth_circle = sp.smooth_shape(sp.segment_line(cx,cy))
-    plt.plot(smooth_circle[:,0],smooth_circle[:,1])
-
-
 
     while True:
         ret, frame = cap.read()
@@ -52,37 +48,29 @@ def main():
             print("Waiting for frame")
 
         res = yd.yolo_result(frame)
-        points = yd.find_right_wrist(res,[9],0.400)
+        points = yd.find_points(res,[9],0.400)
         if len(points) > 0:
             point, conf = points[0]
             cx, cy = point
             x_axis.append(cx)
             y_axis.append(cy)    
-        
-        # f, hsvframe, cx, cy = cproc.frame_proc(frame, c_range_upper, c_range_lower, MIN_AREA)
-        
-        # if cx is not None:    
-        #     x_axis.append(cx)
-        #     y_axis.append(cy)
-            
-        # cv.imshow('frame', f)
-        # hsv_container['hsv'] = hsvframe
-        # cv.setMouseCallback("frame", cproc.get_hsv, param = hsv_container)
                     
         if cv.waitKey(1) == ord('q'):
             break
         
         update_graph()
         
-        smooth_shape = sp.smooth_shape(sp.segment_line(x_axis, y_axis))
-
-        if not(smooth_shape is None):
-            graph2.remove()
-            graph2 = plt.plot(smooth_shape[:,0], smooth_shape[:,1])[0]
-            similarity = sp.check_similarity(sp.normalize_dist_matrix(smooth_shape),sp.normalize_dist_matrix(smooth_circle))
-            
-            if similarity < SIMILARITY_THRESHOLD:
-                print("That was a circle")
+        
+        gestures = fm.load_gestures()
+        line = list(zip(x_axis, y_axis))
+        
+        for gesture in gestures.keys():
+          difference = sp.compare(line, gestures[gesture])
+          if difference != None:
+            print(f"checking gesture {gesture} finding difference {difference}")
+            if difference < SIMILARITY_THRESHOLD:
+              print(f"You made the {gesture} gesture.")
+        
         
         plt.pause(0.000000000000001)
         
